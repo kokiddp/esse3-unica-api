@@ -222,3 +222,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 else 
 	Message::handleMessage(Message::get_400()); // Se non ricevo chiamate POST, lancio un'errore 400
+
+// Google Analytics, non incluso nel repository
+//include_once("analytics/analyticstracking.php");

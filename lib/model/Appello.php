@@ -40,9 +40,9 @@
 		// Getter - Setter per prenotabile
 		public function setPrenotabile($prenotabile){
 			if($prenotabile == "images/app_no_pren.gif")
-				$this->prenotabile = false;
+				$this->prenotabile = "false";
 			else
-				$this->prenotabile = true;
+				$this->prenotabile = "true";
 
 		}
 		public function getPrenotabile(){ return $this->prenotabile; }
