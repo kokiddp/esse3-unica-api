@@ -61,7 +61,7 @@
 		
 		// Getter - Setter per dataIscrizione
 		public function setDataIscrizione($dataIscrizione){
-			$this->dataIscrizione = substr_replace($dataIscrizione, " <br> \n ", 9, 0);
+			$this->dataIscrizione = substr_replace($dataIscrizione, " <br> \n ", 10, 0);
 		}
 		public function getDataIscrizione(){ return $this->dataIscrizione; }
 		
