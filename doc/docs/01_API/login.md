@@ -3,12 +3,12 @@ Questa chiamata serve per controllare che i dati d'accesso inseriti dall'utente,
 Supponiamo quindi di lanciare una chiamata **POST** con i seguenti parametri e vediamo nel dettaglio le possibili risposte del server.
 
 ```
-  postData   = array(
-      'request'   => 'login', 
-      'user'      => 'username',
-      'password'  => 'password',
-      'carriera'  => null
-      );
+  postData    = array(
+        'request'    => 'login', 
+        'user'        => 'username',
+        'password'  => 'password',
+        'carriera'  => null
+        );
 ```
 
 ### Login fallito
@@ -17,11 +17,11 @@ E' importante notare che questo messaggio verrà mostrato in qualsiasi richiesta
 
 ```json
 {
-    "response": {
-        "status": "401",
-        "message": "Errore autenticazione, i dati inseriri risultano non essere corretti."
-    },
-    "data": []
+     "response": {
+          "status": "401",
+          "message": "Errore autenticazione, i dati inseriri risultano non essere corretti."
+     },
+     "data": []
 }
 ```
 
@@ -30,11 +30,11 @@ In caso di autenticazione corretta e di utente con una sola carriera disponibile
 
 ```json
 {
-    "response": {
-        "status": "200",
-        "message": "La richiesta e' stata elaborata correttamente."
-    },
-    "data": []
+     "response": {
+          "status": "200",
+          "message": "La richiesta e' stata elaborata correttamente."
+     },
+     "data": []
 }
 ```
 
@@ -43,47 +43,28 @@ In caso di autenticazione corretta, e di utente con duplice carriera (ma possono
 
 ```json
 {
-    "response": {
-        "status": "200",
-        "message": "La richiesta e' stata elaborata correttamente."
-    },
-    "data": [
-        [
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "00\/'00'\/00000"
-            },
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "TIPOLOGIA CORSO"
-            },
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "NOME CORSO"
-            },
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "STATO"
-            }
-        ],
-        [
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "00\/'00'\/00000"
-            },
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "TIPOLOGIA CORSO"
-            },
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "NOME CORSO"
-            },
-            {
-                "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
-                "text": "STATO"
-            }
-        ],
-    ]
+     "response": {
+          "status": "200",
+          "message": "La richiesta e' stata elaborata correttamente."
+     },
+     "data": [
+                {
+                     "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
+                     "text": "Corso n° 1"
+                },
+                {
+                     "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
+                     "text": "Corso n° 2"
+                },
+                {
+                     "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
+                     "text": "Corso n° 3"
+                },
+                {
+                     "href": "auth\/studente\/SceltaCarrieraStudente.do;jsessionid=JESSIONID?stu_id=ID_CARRIERA",
+                     "text": "Corso n° 4"
+                }
+          ],
+     ]
 }
 ```

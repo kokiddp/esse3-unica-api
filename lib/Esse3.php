@@ -185,28 +185,6 @@
 		}
 
 		/*
-		 * Restituisce un campo delle varie carriere disponibili
-		 * $carriera = INT è il primo indice che serve a scegliere la carriera: Es: [0]Informatica / []Corsi Singoli
-		 * $colonna = INT serve a selezionare la colonna della tabella, durante il login sono presenti più link
-		 * $campo = href/text serve a selezionare il volore che vogliamo utilizzare.
-		 * [0] => Array (
-            	[0] => Array (
-                    [href] => auth/studente/SceltaCarrieraStudente.do;jsessionid=489D6943B20CAEE45693A8EE0A200DE5?stu_id=289221
-                    [text] => 60/61/65101
-                )
-            [1] => Array (
-                    [href] => auth/studente/SceltaCarrieraStudente.do;jsessionid=489D6943B20CAEE45693A8EE0A200DE5?stu_id=289221
-                    [text] => Corso di Laurea
-                )
-        )
-		 * DEPRECATA
-		public function getValueCarriere($carriera, $colonna, $campo){	
-			return $this->carriere[$carriera][$colonna][$campo];
-		}
-		*/
-		
-
-		/*
 		 _   _ _____ _____ ____          ____  _____ ___  _   _ _____ ____ _____ 
 		| | | |_   _|_   _|  _ \        |  _ \| ____/ _ \| | | | ____/ ___|_   _|
 		| |_| | | |   | | | |_) |       | |_) |  _|| | | | | | |  _| \___ \ | |  
@@ -222,7 +200,7 @@
 
 		// Se l'utente loggato ha più carriere, questa richiesta setta la carriera desiderata
 		public function attivaCarrieraSelezionata(){
-			return $this->requestPage( self::BASEURL . $this->carrieraScelta[0]['href'], true);
+			return $this->requestPage( self::BASEURL . $this->carrieraScelta['href'], true);
 		}
 
 		// Restituisco la pagina della carriera con le informazioni dell'utente

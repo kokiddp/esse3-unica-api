@@ -14,12 +14,12 @@
  *
  */
 
-//ini_set('display_errors',1);
-//error_reporting(E_ERROR | E_PARSE | E_NOTICE);
+
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 error_reporting(0);
-
+//ini_set('display_errors',1);
+//error_reporting(E_ERROR | E_PARSE | E_NOTICE);
 
  //Includo la libreria
 include('lib/ParseEsse3.php');
@@ -170,8 +170,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						Message::handleMessage(Message::get_200(), $libretto);
 					}
-					else
-						Message::handleMessage(Message::get_500());
+					else{
+						print_r($librettoArr);
+						//Message::handleMessage(Message::get_500());
+					}
 				break;
 
 				// Restituisco le informazioni degli appelli a cui ci si è prenotati
