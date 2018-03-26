@@ -25,4 +25,6 @@ The documentation is in Italian.
 
 # Other implementation 
 
-Want to see what you can create with this API? Check my [Esse3-Unica-Google-Chrome web extension](https://github.com/AsoStrife/esse3-unica-google-chrome)!
+Want to see what you can create with this API? Check this:
+- [Esse3-Unica-Google-Chrome web extension](https://github.com/AsoStrife/esse3-unica-google-chrome)!
+- [Esse3-Unica-APP](https://github.com/AsoStrife/esse3-unica-electron)
