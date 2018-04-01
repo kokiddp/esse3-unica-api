@@ -19,7 +19,7 @@ With this API you can get:
 
 # Documentation
 
-You can find all documentation [HERE](http://esse3unica.azurewebsites.net/doc/)
+You can find all documentation [HERE](https://github.com/UnicApp/esse3-unica-api/wiki). Currently is all in italian.
 
 The documentation is in Italian. 
 
