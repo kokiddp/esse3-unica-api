@@ -8,18 +8,19 @@
  * @author     Andrea Corriga <me@andreacorriga.com>
  * @copyright  2016 Andrea Corriga
  * @license    
- * @version    1.0
- * @link       http://andreacorriga.com
+ * @version    1.1
+ * @link       https://andreacorriga.com
  *
  *
  */
 
 
 error_reporting(E_ALL);
-ini_set('display_errors', 0);
-error_reporting(0);
-//ini_set('display_errors',1);
-//error_reporting(E_ERROR | E_PARSE | E_NOTICE);
+
+//ini_set('display_errors', 0);
+//error_reporting(0);
+ini_set('display_errors',1);
+error_reporting(E_ERROR | E_PARSE | E_NOTICE);
 
  //Includo la libreria
 include('lib/ParseEsse3.php');
@@ -101,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					}
 
 					$allValue = array(
-										"utente" 		=> $utente,
+										"utente" 		=> $utente ? $utente : array(),
 										"appelliTot"	=> $appelliT,
 										"appelliParz"	=> $appelliP,
 										"libretto"		=> $libretto,
@@ -171,8 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 						Message::handleMessage(Message::get_200(), $libretto);
 					}
 					else{
-						print_r($librettoArr);
-						//Message::handleMessage(Message::get_500());
+						//print_r($librettoArr);
+						Message::handleMessage(Message::get_500());
 					}
 				break;
 
@@ -181,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					$prenotazioniArr = $esse3->parsePrenotazioni();
 					$prenotazioni = array();
 
-					if(is_array($prenotazioniArr)){
+					if(is_array($prenotazioniArr) && empty($prenotazioniArr) != true){
 						foreach($prenotazioniArr as $p)
 							$prenotazioni[] = $p->getPrenotazione();
 

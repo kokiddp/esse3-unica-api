@@ -253,6 +253,10 @@ class ParseEsse3 extends Esse3 {
 		$xpath = new DOMXPath($doc);
 		$table = $xpath->query("//*[@class='detail_table']")->item(0);
 
+		// Security check
+		if(empty($table))
+			return null;
+
 		$rows 		= $table->getElementsByTagName("tr");
 		//$libretto 	= null;
 		$tassa 		= null;
@@ -363,7 +367,11 @@ class ParseEsse3 extends Esse3 {
 			return array();
 
 		$tables 		= $xpath->query("//table[@class='detail_table']");
-		$prenotazione[] = null;
+
+		if(empty($tables))
+			return null;
+
+		$prenotazione = null;
 		$colonnaInfo	= 5; 
 
 		foreach($tables as $key => $table){
