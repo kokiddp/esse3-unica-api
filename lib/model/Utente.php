@@ -15,13 +15,18 @@
  */
  
 	class Utente {
-		private $nome;			// Nome dell'utente loggato
-		private $cognome; 		// Cognome dell'utente loggato
-		private $matricola; 	// Matricola nel formato xx/yy/jjjj
-		private $email; 		// Email dell'utente
-		private $emailAteneo;	// Email dell'ateneo associata all'utente
-		private $telefono;		// Telefono dell'utente
-		private $statoCarriera; // Lo stato della carriera
+		private $nome = "";			// Nome dell'utente loggato
+		private $cognome = ""; 		// Cognome dell'utente loggato
+		private $matricola = ""; 	// Matricola nel formato xx/yy/jjjj
+		private $email = ""; 		// Email dell'utente
+		private $emailAteneo = "";	// Email dell'ateneo associata all'utente
+		private $telefono = "";		// Telefono dell'utente
+		private $statoCarriera = ""; // Lo stato della carriera
+		private $cfuTotali = 0; 	// CFU totali attualmente disponibili
+		private $cfu = 0; 			// CFU attualmente convalidati
+		private $mediaAritmetica = 0; // Media artmetica degli esami
+		private $mediaPonderata = 0; // Media ponderata degli esami
+
 		//private $domicilio;
 		//private $residenza;
 
@@ -95,14 +100,18 @@
 		// Restituisco l'oggetto sottoforma di array
 		public function getUtente(){
 			return array(
-					"nome" 			=> $this->nome ? $this->nome : "",
-					"cognome" 		=> $this->cognome ? $this->cognome : "", 
-					"matricolaL" 	=> $this->matricola ? $this->matricola : "", // Matricola nel formato xx/yy/jjjj
+					"nome" 			=> $this->nome,
+					"cognome" 		=> $this->cognome, 
+					"matricolaL" 	=> $this->matricola, // Matricola nel formato xx/yy/jjjj
 					"matricolaS"	=> $this->getMatricola(false),
-					"email" 		=> $this->email ? $this->email : "",
-					"emailAteneo" 	=> $this->emailAteneo ? $this->emailAteneo : "",
-					"telefono" 		=> $this->telefono ? $this->telefono : "",
-					"statoCarriera" => $this->statoCarriera ? $this->statoCarriera : ""
+					"email" 		=> $this->email,
+					"emailAteneo" 	=> $this->emailAteneo,
+					"telefono" 		=> $this->telefono,
+					"statoCarriera" => $this->statoCarriera,
+					"cfu" 			=> $this->cfu ,
+					"cfuTotali" 	=> $this->cfuTotali ,
+					"mediaAritmetica" => $this->mediaAritmetica,
+					"mediaPonderata" 	=> $this->mediaPonderata,
 				);
 		}
 
@@ -113,4 +122,35 @@
 		public setResidenza($r){ $this->residenza = $r}
 		public getResidenza() { return $this->residenza;}
 		*/
+
+		public function setCfuAndMedia($librettoArray){
+
+			if(is_array($librettoArray)){
+				foreach($librettoArray as $l)
+					$libretto[] = $l->getLibretto();
+			}
+
+			$esamiSuperati = 0;
+			$sommaVoti = 0;
+			$sommaPonderata = 0;
+			$cfuMedia = 0;
+			
+			foreach($libretto as $l){
+				if($l['stato'] == "Superato"){
+					$esamiSuperati++;
+					// Escludo le idoneità
+					if($l['voto'] != "IDO"){
+						$sommaPonderata += $l['voto'] * $l['crediti'];
+						$sommaVoti += $l['voto'];
+						$cfuMedia += $l['crediti'];
+					}
+					$this->cfu += $l['crediti'];
+				}
+
+				$this->cfuTotali += $l['crediti'];
+			}
+
+			$this->mediaAritmetica = $sommaVoti / $esamiSuperati;
+			$this->mediaPonderata = $sommaPonderata / $cfuMedia;
+		}
 	}

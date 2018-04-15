@@ -155,6 +155,12 @@ class ParseEsse3 extends Esse3 {
 			$utente->setTelefono($ddHtml[6]->nodeValue);		
 			$utente->setMatricola($matricola->nodeValue);
 			$utente->setStatoCarriera("attiva");
+
+			$libretto = $this->parseLibretto();
+
+			if(empty($libretto) == false)
+				$utente->setCfuAndMedia($libretto);
+
 			return $utente->getUtente();
 		}
 	}
