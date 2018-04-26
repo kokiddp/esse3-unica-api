@@ -315,7 +315,8 @@ class ParseEsse3 extends Esse3 {
 		$doc->loadHTML($response[0]);
 
 		$xpath = new DOMXPath($doc);
-		$table = $xpath->query("//*[@class='detail_table']")->item(0);
+		//$table = $xpath->query("//*[@class='detail_table']")->item(0);
+		$table = $doc->getElementById("app-tabella_appelli");
 		
 		// Se non è disponibile nessun appello restituisco un valore nullo
 		if(isset($table->nodeValue) && $table->nodeValue == "Nessun appello disponibile")
