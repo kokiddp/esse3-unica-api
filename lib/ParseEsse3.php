@@ -69,7 +69,7 @@ class ParseEsse3 extends Esse3 {
 						
 						foreach($arr as $item) {
 							$href =  $item->getAttribute("href");
-							$text = $line[1]->nodeValue . ' - ' . $line[2]->nodeValue;
+							$text = $line[1]->textContent . ' - ' . $line[2]->textContent;
 							$links[] = array( 'href' => $href, 'text' => $text );
 						}
 					}
@@ -124,7 +124,7 @@ class ParseEsse3 extends Esse3 {
 			$utente->setCognome($datiPersonali[1]['description'][0]['#text']);
 			$utente->setEmail($datiPersonali[4]['description'][0]['#text']);
 			$utente->setTelefono($datiPersonali[5]['description'][0]['#text']);
-			$utente->setMatricola($matricola->nodeValue);
+			$utente->setMatricola($matricola->textContent);
 			$utente->setStatoCarriera("registrata");
 			return $utente->getUtente();
 		}
@@ -148,12 +148,12 @@ class ParseEsse3 extends Esse3 {
 
 			// Credo un oggetto utente, uso i setter per impostare i dati e restituisco l'oggetto
 			$utente = new Utente();
-			$utente->setNome($ddHtml[1]->nodeValue);
-			$utente->setCognome($ddHtml[1]->nodeValue);
+			$utente->setNome($ddHtml[1]->textContent);
+			$utente->setCognome($ddHtml[1]->textContent);
 			$utente->setEmail(explode(" ", $ddHtml[4]->textContent)[0]); // use explode because of space and "modifica" link in the page
 			$utente->setEmailAteneo($ddHtml[5]->textContent);
-			$utente->setTelefono($ddHtml[6]->nodeValue);		
-			$utente->setMatricola($matricola->nodeValue);
+			$utente->setTelefono($ddHtml[6]->textContent);		
+			$utente->setMatricola($matricola->textContent);
 			$utente->setStatoCarriera("attiva");
 
 			$libretto = $this->parseLibretto();
@@ -188,7 +188,7 @@ class ParseEsse3 extends Esse3 {
 		// Se non esiste la tabella, perché magari non è ancora stato inserito un esame, restituisco null
 		if(empty($table))
 			return null;
-		elseif($table->nodeValue == "Non è stata ancora sostenuta alcuna attività didattica.")
+		elseif($table->textContent == "Non è stata ancora sostenuta alcuna attività didattica.")
 			return null;
 
 		$rows 		= $table->getElementsByTagName("tr");
@@ -203,8 +203,8 @@ class ParseEsse3 extends Esse3 {
 					//echo '<pre>'; print_r($cell);
 			  		if ($cell->nodeName == 'td') {
 
-			  			if($cell->nodeValue != null)
-							$esami[$key][] = $cell->nodeValue;
+			  			if($cell->textContent != null)
+							$esami[$key][] = $cell->textContent;
 
 						foreach($cell->getElementsByTagName("img") as $img)
 							$esami[$key][] =  $img->getAttribute("src");
@@ -219,14 +219,14 @@ class ParseEsse3 extends Esse3 {
 			  		if ($cell->nodeName == 'td') {
 
 			  			// Col != 0 perché negli esami di ingegneria ci sono i corsi integrati e la prima colonna viene ereditata dalla prima riga inerente a quel blocco di esami
-			  			if($cell->nodeValue != null && $col != 0)
-							$esami[$key][] = $cell->nodeValue;
+			  			if($cell->textContent != null && $col != 0)
+							$esami[$key][] = $cell->textContent;
 
 						foreach($cell->getElementsByTagName("img") as $img)
 							$esami[$key][] =  $img->getAttribute("src") == "images/figlio_raggr.gif" ? $esami[$key-1][0] : $img->getAttribute("src"); //echo $img->getAttribute("src") .'<br>'; 
 
 						foreach($cell->getElementsByTagName("a") as $img)
-							$esami[$key][] =  $img->nodeValue; //echo $img->nodeValue.'<br>';
+							$esami[$key][] =  $img->textContent; //echo $img->textContent.'<br>';
 						
 				 	} 
 				} // end of foreach($cells as $cell )
@@ -273,8 +273,8 @@ class ParseEsse3 extends Esse3 {
 		  	foreach ($cells as $col => $cell) {
 		  		if ($cell->nodeName == 'td') {
 
-		  			if($cell->nodeValue != null)
-						$tassa[$key][] = $cell->nodeValue;
+		  			if($cell->textContent != null)
+						$tassa[$key][] = $cell->textContent;
 
 					foreach($cell->getElementsByTagName("img") as $img)
 						$tassa[$key][] =  $img->getAttribute("src");
@@ -319,10 +319,10 @@ class ParseEsse3 extends Esse3 {
 		$table = $doc->getElementById("app-tabella_appelli");
 		
 		// Se non è disponibile nessun appello restituisco un valore nullo
-		if(isset($table->nodeValue) && $table->nodeValue == "Nessun appello disponibile")
+		if(isset($table->textContent) && $table->textContent == "Nessun appello disponibile")
 			return array();
 
-		if(!isset($table->nodeValue))
+		if(!isset($table->textContent))
 			return array();
 
 		$rows 		= $table->getElementsByTagName("tr");
@@ -370,7 +370,7 @@ class ParseEsse3 extends Esse3 {
 		
 		// Se non è disponibile nessun appello restituisco un valore nullo
 
-		if(isset($message->nodeValue) && $message->nodeValue == "Nessun appello prenotato in bacheca.")
+		if(isset($message->textContent) && $message->textContent == "Nessun appello prenotato in bacheca.")
 			return array();
 
 		$tables 		= $xpath->query("//table[@class='detail_table']");
@@ -394,16 +394,16 @@ class ParseEsse3 extends Esse3 {
 				  	foreach ($ths as $keyth => $th) {
 				  		if ($th->nodeName == 'th') {
 
-				  			if($th->nodeValue != null){
+				  			if($th->textContent != null){
 				  				if($keyth == 0 && $rowkey == 0)
-									$prenotazione[$key]->setNomePrenotazione($th->nodeValue);
+									$prenotazione[$key]->setNomePrenotazione($th->textContent);
 								if($keyth == 0 && $rowkey == 1)
-									$prenotazione[$key]->setNumeroIscrizione($th->nodeValue);
+									$prenotazione[$key]->setNumeroIscrizione($th->textContent);
 								if($keyth == 0 && $rowkey == 2){
-									if($th->nodeValue == "Giorno")
+									if($th->textContent == "Giorno")
 										$colonnaInfo = 4;
 									else
-										$prenotazione[$key]->setTipoProva($th->nodeValue);
+										$prenotazione[$key]->setTipoProva($th->textContent);
 								}
 							}
 					 	} 
@@ -414,21 +414,21 @@ class ParseEsse3 extends Esse3 {
 				  	foreach ($tds as $keytd => $td) {
 				  		if ($td->nodeName == 'td') {
 
-				  			if($td->nodeValue != null){
+				  			if($td->textContent != null){
 				  				if($keytd == 0 && $rowkey == $colonnaInfo)
-									$prenotazione[$key]->setGiorno($td->nodeValue);
+									$prenotazione[$key]->setGiorno($td->textContent);
 								if($keytd == 1 && $rowkey == $colonnaInfo)
-									$prenotazione[$key]->setOra($td->nodeValue);
+									$prenotazione[$key]->setOra($td->textContent);
 								if($keytd == 2 && $rowkey == $colonnaInfo)
-									$prenotazione[$key]->setEdificio($td->nodeValue);
+									$prenotazione[$key]->setEdificio($td->textContent);
 								if($keytd == 3 && $rowkey == $colonnaInfo)
-									$prenotazione[$key]->setAula($td->nodeValue);
+									$prenotazione[$key]->setAula($td->textContent);
 								if($keytd == 4 && $rowkey == $colonnaInfo)
-									$prenotazione[$key]->setRiservatoPer($td->nodeValue);
+									$prenotazione[$key]->setRiservatoPer($td->textContent);
 								if($keytd == 5 && $rowkey == $colonnaInfo)
-									$prenotazione[$key]->setDocenti($td->nodeValue);
+									$prenotazione[$key]->setDocenti($td->textContent);
 								if($keytd == 0 && $rowkey != $colonnaInfo)
-									$prenotazione[$key]->setDocenti($td->nodeValue);
+									$prenotazione[$key]->setDocenti($td->textContent);
 				  			}
 					 	} 
 					}
