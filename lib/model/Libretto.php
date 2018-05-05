@@ -16,15 +16,16 @@
  
 	class Libretto {
 
-		private $annoCorso; 		// L'anno a cui appartiene il corso
-		private $nomeCorso; 		// Il nome del corso
-		private $crediti; 			// Quanti crediti da il corso
-		private $stato; 			// Esame superato o ancora da sostenere?
-		private $annoFrequenza; 	// In che anno è stato frequentato il corso
-		private $voto; 				// Con che voto è stato superato l'esame
-		private $lode; 				// Il voto ha la lode?
-		private $dataConvalida;		// In che data è stato convalidato l'esame
-		private $obbligatorio;		// L'esame in questione è collegato al piano di studi?
+		private $annoCorso = ""; 		// L'anno a cui appartiene il corso
+		private $nomeCorso = ""; 		// Il nome del corso
+		private $nomeCorsoSmall = ""; 	// Il nome del corso
+		private $crediti = ""; 			// Quanti crediti da il corso
+		private $stato = ""; 			// Esame superato o ancora da sostenere?
+		private $annoFrequenza = ""; 	// In che anno è stato frequentato il corso
+		private $voto = ""; 				// Con che voto è stato superato l'esame
+		private $lode = ""; 				// Il voto ha la lode?
+		private $dataConvalida = "";		// In che data è stato convalidato l'esame
+		private $obbligatorio = "";		// L'esame in questione è collegato al piano di studi?
 
 		/**
 		 * In ParseEsse3 quando viene richiamato un costruttore viene
@@ -64,6 +65,7 @@
 				if(count($corso) == 7){
 					$this->setAnnoCorso($corso[0]);
 					$this->setNomeCorso("$corso[1]");
+					$this->setNomeCorsoSmall("$corso[1]");
 					$this->setCrediti($corso[2]);
 					$this->setStato($corso[3]);
 					$this->setAnnoFrequenza($corso[4]);
@@ -74,6 +76,7 @@
 				if(count($corso) == 8 || count($corso) == 9){
 					$this->setAnnoCorso($corso[0]);
 					$this->setNomeCorso($corso[1]);
+					$this->setNomeCorsoSmall("$corso[1]");
 					$this->setCrediti($corso[3]);
 					$this->setStato($corso[4]);
 					$this->setAnnoFrequenza($corso[5]);
@@ -93,10 +96,24 @@
 
 		// Getter - Setter per nomeCorso
 		private function setNomeCorso($nomeCorso){
-			$this->nomeCorso = $nomeCorso;
+			$array = explode("-", $nomeCorso);
+			$this->nomeCorso = $array[0] . "- " . $this->nomeCorsoHandler($array[1]);
 		}
 		public function getNomeCorso(){ return $this->nomeCorso; }
 
+		// Getter - Setter per nomeCorsoSmall
+		private function setNomeCorsoSmall($nomeCorso){
+			$array = explode("-", $nomeCorso);
+			$this->nomeCorsoSmall = $this->nomeCorsoHandler($array[1]);
+		}
+		public function getNomeCorsoSmall(){ return $this->nomeCorsoSmall; }
+
+		private function nomeCorsoHandler($nomeCorso){
+			$nomeCorso = trim($nomeCorso);
+			$nomeCorso = strtolower($nomeCorso);
+			$nomeCorso = ucfirst($nomeCorso);
+			return $nomeCorso;
+		}
 		// Getter - Setter per crediti
 		private function setCrediti($crediti){
 			if($crediti != "images/ad_piano.gif")
@@ -172,15 +189,16 @@
 		public function getLibretto(){
 
 			return array(
-					"nomeCorso" 	=> $this->nomeCorso 	? $this->nomeCorso : "",
-					"annoCorso" 	=> $this->annoCorso 	? $this->annoCorso : "", 
-					"crediti" 		=> $this->crediti 		? $this->crediti : "", 
-					"stato"			=> $this->stato 		? $this->stato : "",
-					"annoFrequenza" => $this->annoFrequenza ? $this->annoFrequenza : "",
-					"obbligatorio" 	=> $this->obbligatorio 	? $this->obbligatorio : "",
-					"voto" 			=> $this->voto 			? $this->voto : "",
-					"lode" 			=> $this->lode 			? $this->lode : "",
-					"dataConvalida" => $this->dataConvalida ? $this->dataConvalida : "",
+					"nomeCorso" 	=> $this->nomeCorso,
+					"nomeCorsoSmall" => $this->nomeCorsoSmall,
+					"annoCorso" 	=> $this->annoCorso, 
+					"crediti" 		=> $this->crediti, 
+					"stato"			=> $this->stato,
+					"annoFrequenza" => $this->annoFrequenza,
+					"obbligatorio" 	=> $this->obbligatorio,
+					"voto" 			=> $this->voto,
+					"lode" 			=> $this->lode,
+					"dataConvalida" => $this->dataConvalida
 				);
 		}
 	}
