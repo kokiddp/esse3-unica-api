@@ -141,10 +141,7 @@ class ParseEsse3 extends Esse3 {
 			
 			$ddHtml = $datiPersonaliHtml->getElementsByTagName("dd");
 			$matricola = $doc->getElementById("gu-header"); // get matricola
-
 			//print_r($ddHtml[1]);
-
-			$datiPersonali = array();
 
 			// Credo un oggetto utente, uso i setter per impostare i dati e restituisco l'oggetto
 			$utente = new Utente();
@@ -156,10 +153,20 @@ class ParseEsse3 extends Esse3 {
 			$utente->setMatricola($matricola->textContent);
 			$utente->setStatoCarriera("attiva");
 
-			$libretto = $this->parseLibretto();
+			// Ottengo media ponderata e aritmetica
+			$riepilogoEsami = $doc->getElementById("gu-boxRiepilogoEsami");
+			// Non ci sono errori quindi prendo gli elementi
+			if(!empty($riepilogoEsami)){
+				$ddHtml = $riepilogoEsami->getElementsByTagName("dd");
+				$utente->setEsamiRegistrati($ddHtml[0]->textContent);
+				$utente->setMediaAritmetica($ddHtml[1]->textContent);
+				$utente->setMediaPonderata($ddHtml[2]->textContent);
+			}
 
+			$libretto = $this->parseLibretto();
+			
 			if(empty($libretto) == false)
-				$utente->setCfuAndMedia($libretto);
+				$utente->setCfu($libretto);
 
 			return $utente->getUtente();
 		}

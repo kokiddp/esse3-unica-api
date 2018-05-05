@@ -26,7 +26,7 @@
 		private $cfu = 0; 			// CFU attualmente convalidati
 		private $mediaAritmetica = 0; // Media artmetica degli esami
 		private $mediaPonderata = 0; // Media ponderata degli esami
-
+		private $esamiRegistrati = 0; // Esami registrati dallo studente
 		//private $domicilio;
 		//private $residenza;
 
@@ -70,13 +70,13 @@
 
 		// Getter - Setter per email
 		public function setEmail($email){ 
-			$this->email = $email; 
+			$this->email = trim($email); 
 		}
 		public function getEmail() { return $this->email; }
 
 		// Getter - Setter per emailAteneo
 		public function setEmailAteneo($emailAteneo){ 
-			$this->emailAteneo = $emailAteneo; 
+			$this->emailAteneo = trim($emailAteneo); 
 		}
 		public function getEmailAteneo() { return $this->emailAteneo;}
 
@@ -97,6 +97,40 @@
 		}
 		public function getStatoCarriera(){ return $this->statoCarriera;}
 
+		// Getter - Setter per media aritmetica
+		public function setMediaAritmetica($mediaAritmetica){ 
+			$array = explode("/", $mediaAritmetica);
+			$this->mediaAritmetica = trim($array[0]); 
+		}
+		public function getMediaAritmetica() { return $this->mediaAritmetica; }
+
+		// Getter - Setter per media ponderata
+		public function setMediaPonderata($mediaPonderata){ 
+			$array = explode("/", $mediaPonderata);
+			$this->mediaPonderata = trim($array[0]); 
+		}
+		public function getMediaPonderata() { return $this->mediaPonderata; }
+
+		// Getter - Setter per esami registrati
+		public function setEsamiRegistrati($esamiRegistrati){ 
+			$this->esamiRegistrati = trim($esamiRegistrati); 
+		}
+		public function getEsamiRegistrati() { return $this->esamiRegistrati; }
+
+
+		public function setCfu($librettoArray){
+			if(is_array($librettoArray)){
+				foreach($librettoArray as $l)
+					$libretto[] = $l->getLibretto();
+			}
+			foreach($libretto as $l){
+				if($l['stato'] == "Superato"){
+					$this->cfu += $l['crediti'];
+				}
+				$this->cfuTotali += $l['crediti'];
+			}
+		}
+
 		// Restituisco l'oggetto sottoforma di array
 		public function getUtente(){
 			return array(
@@ -112,6 +146,7 @@
 					"cfuTotali" 	=> $this->cfuTotali ,
 					"mediaAritmetica" => $this->mediaAritmetica,
 					"mediaPonderata" 	=> $this->mediaPonderata,
+					"esamiRegistrati" 	=> $this->esamiRegistrati,
 				);
 		}
 
@@ -123,34 +158,5 @@
 		public getResidenza() { return $this->residenza;}
 		*/
 
-		public function setCfuAndMedia($librettoArray){
 
-			if(is_array($librettoArray)){
-				foreach($librettoArray as $l)
-					$libretto[] = $l->getLibretto();
-			}
-
-			$esamiSuperati = 0;
-			$sommaVoti = 0;
-			$sommaPonderata = 0;
-			$cfuMedia = 0;
-			
-			foreach($libretto as $l){
-				if($l['stato'] == "Superato"){
-					$esamiSuperati++;
-					// Escludo le idoneità
-					if($l['voto'] != "IDO"){
-						$sommaPonderata += $l['voto'] * $l['crediti'];
-						$sommaVoti += $l['voto'];
-						$cfuMedia += $l['crediti'];
-					}
-					$this->cfu += $l['crediti'];
-				}
-
-				$this->cfuTotali += $l['crediti'];
-			}
-
-			$this->mediaAritmetica = $sommaVoti / $esamiSuperati;
-			$this->mediaPonderata = $sommaPonderata / $cfuMedia;
-		}
 	}
