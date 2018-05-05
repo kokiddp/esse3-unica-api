@@ -22,9 +22,10 @@
 		private $crediti = ""; 			// Quanti crediti da il corso
 		private $stato = ""; 			// Esame superato o ancora da sostenere?
 		private $annoFrequenza = ""; 	// In che anno è stato frequentato il corso
-		private $voto = ""; 				// Con che voto è stato superato l'esame
-		private $lode = ""; 				// Il voto ha la lode?
-		private $dataConvalida = "";		// In che data è stato convalidato l'esame
+		private $voto = ""; 			// Con che voto è stato superato l'esame
+		private $votoComplete = "";		// Il voto dell'esame con eventuale lode
+		private $lode = ""; 			// Il voto ha la lode?
+		private $dataConvalida = "";	// In che data è stato convalidato l'esame
 		private $obbligatorio = "";		// L'esame in questione è collegato al piano di studi?
 
 		/**
@@ -156,9 +157,11 @@
 				if($voto == "30L "){
 					$this->voto = "30";
 					$this->lode = true;
+					$this->votoComplete = "30L";
 				}
 				else{
 					$this->voto = str_replace( chr( 194 ) . chr( 160 ), '', $voto ); // pulisco la stringa dal carattere \u00a0 
+					$this->votoComplete = str_replace( chr( 194 ) . chr( 160 ), '', $voto ); // pulisco la stringa dal carattere \u00a0 
 					$this->lode = false;
 				}
 			}
@@ -197,6 +200,7 @@
 					"annoFrequenza" => $this->annoFrequenza,
 					"obbligatorio" 	=> $this->obbligatorio,
 					"voto" 			=> $this->voto,
+					"votoComplete" 	=> $this->votoComplete,
 					"lode" 			=> $this->lode,
 					"dataConvalida" => $this->dataConvalida
 				);
