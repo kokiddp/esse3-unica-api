@@ -16,13 +16,13 @@
 
 	class Appello {
 
-		private $prenotabile;		// Il corso è già prenotabile?
-		private $nomeCorso; 		// Il nome del corso
-		private $dataAppello; 		// In che data si svolge l'esame
-		private $dataIscrizione; 	// Data apertura e chiusura delle scrizioni all'esame
-		private $descrizione; 		// Descrizione dell'esame 
-		private $presidente; 		// Presidente dell'esame 
-		private $cfu; 				// Quanti CFU vale il corso
+		private $prenotabile = "";		// Il corso è già prenotabile?
+		private $nomeCorso = ""; 		// Il nome del corso
+		private $dataAppello = ""; 		// In che data si svolge l'esame
+		private $dataIscrizione = ""; 	// Data apertura e chiusura delle scrizioni all'esame
+		private $descrizione = ""; 		// Descrizione dell'esame 
+		private $presidente = ""; 		// Presidente dell'esame 
+		private $cfu = ""; 				// Quanti CFU vale il corso
 		
 		public function __construct($appello){
 			if(count($appello) == 7){
@@ -40,9 +40,9 @@
 		// Getter - Setter per prenotabile
 		public function setPrenotabile($prenotabile){
 			if($prenotabile == "images/app_no_pren.gif")
-				$this->prenotabile = "false";
+				$this->prenotabile = false;
 			else
-				$this->prenotabile = "true";
+				$this->prenotabile = true;
 
 		}
 		public function getPrenotabile(){ return $this->prenotabile; }
@@ -73,6 +73,9 @@
 
 		// Getter - Setter per presidente
 		public function setPresidente($presidente){
+			$presidente = trim($presidente);
+			$presidente = strtolower($presidente);
+			$presidente = ucwords($presidente);
 			$this->presidente = $presidente;
 		}
 		public function getPresidente(){ return $this->presidente; }
@@ -86,13 +89,13 @@
 		// Restituisco l'oggetto sottoforma di array
 		public function getAppello(){
 			return array(
-					"prenotabile" 		=> $this->prenotabile 	? $this->prenotabile : "",
-					"nomeCorso" 		=> $this->nomeCorso 	? $this->nomeCorso : "",
-					"dataAppello" 		=> $this->dataAppello 	? $this->dataAppello : "",
-					"dataIscrizione" 	=> $this->dataIscrizione ? $this->dataIscrizione : "",
-					"descrizione" 		=> $this->descrizione 	? $this->descrizione : "",
-					"presidente" 		=> $this->presidente 	? $this->presidente : "",
-					"cfu" 				=> $this->cfu 			? $this->cfu : ""
+					"prenotabile" 		=> $this->prenotabile,
+					"nomeCorso" 		=> $this->nomeCorso,
+					"dataAppello" 		=> $this->dataAppello,
+					"dataIscrizione" 	=> $this->dataIscrizione,
+					"descrizione" 		=> $this->descrizione,
+					"presidente" 		=> $this->presidente,
+					"cfu" 				=> $this->cfu
 				);
 		}
 	
