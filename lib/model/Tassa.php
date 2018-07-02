@@ -47,7 +47,7 @@
 				$this->setDescrizione($tassa[2]);
 				$this->setScadenza($tassa[3]);
 				$this->setImporto($tassa[4]);
-				$this->setStato($tassa[5]);
+				$this->setStato($tassa[6]);
 
 			}
 		}
@@ -90,6 +90,7 @@
 
 		// Getter - Setter per stato
 		public function setStato($stato){
+			//print_r($stato);
 			switch($stato){
 				case 'images/semaf_v.gif': 
 					$this->stato = 'Pagata';

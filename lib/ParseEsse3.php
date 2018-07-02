@@ -264,8 +264,8 @@ class ParseEsse3 extends Esse3 {
 		$doc->loadHTML($response[0]);
 
 		$xpath = new DOMXPath($doc);
-		//$table = $xpath->query("//*[@class='detail_table']")->item(0);
-		$table = $doc->getElementById("tasse-tableFatt");
+		$table = $xpath->query("//*[@class='table-1-body']")->item(0);
+		//$table = $doc->getElementById("tasse-tableFatt");
 		// Security check
 		if(empty($table))
 			return null;
@@ -276,8 +276,9 @@ class ParseEsse3 extends Esse3 {
 
 		foreach ($rows as $key => $row) {
 			$cells = $row->getElementsByTagName('td');
-		  	
+
 		  	foreach ($cells as $col => $cell) {
+
 		  		if ($cell->nodeName == 'td') {
 
 		  			if($cell->textContent != null)
@@ -286,12 +287,14 @@ class ParseEsse3 extends Esse3 {
 					foreach($cell->getElementsByTagName("img") as $img)
 						$tassa[$key][] =  $img->getAttribute("src");
 					
-			 	} 
+			 	}
+
 			
 			} // end of foreach($cells as $cell )
 			if(count($tassa[$key]) == 7)
 				$tasse[$key] = new Tassa($tassa[$key]);
-				
+			
+
 		} // end of foreach ($rows as $key => $row)
 		
 		return $tasse; 
