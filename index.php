@@ -17,10 +17,10 @@
 
 error_reporting(E_ALL);
 
-//ini_set('display_errors', 0);
-//error_reporting(0);
-ini_set('display_errors',1);
-error_reporting(E_ERROR | E_PARSE | E_NOTICE);
+ini_set('display_errors', 0);
+error_reporting(0);
+//ini_set('display_errors',1);
+//error_reporting(E_ERROR | E_PARSE | E_NOTICE);
 
  //Includo la libreria
 include('lib/ParseEsse3.php');

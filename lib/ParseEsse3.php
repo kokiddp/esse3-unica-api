@@ -264,8 +264,8 @@ class ParseEsse3 extends Esse3 {
 		$doc->loadHTML($response[0]);
 
 		$xpath = new DOMXPath($doc);
-		$table = $xpath->query("//*[@class='detail_table']")->item(0);
-
+		//$table = $xpath->query("//*[@class='detail_table']")->item(0);
+		$table = $doc->getElementById("tasse-tableFatt");
 		// Security check
 		if(empty($table))
 			return null;

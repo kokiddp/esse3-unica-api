@@ -18,7 +18,7 @@
 
 		private $idPagamento; 				// L'ID del pagamento 
 		private $numeroAvvisoPagamento; 	// Numero del pagamento (? simile all'id)
-		private $anno; 						// Anno di riferimento
+		//private $anno; 						// Anno di riferimento
 		private $descrizione; 				// Descrizione relativa al pagamento (es: Tassa di iscrizione/immatricolazione)
 		private $scadenza; 					// Quando scade il termine ultimo per il pagamento
 		private $importo; 					// Importo del pagamento
@@ -43,11 +43,11 @@
 			if(count($tassa) == 7){
 				$this->setIdPagamento($tassa[0]);
 				$this->setNumeroAvvisoPagamento($tassa[1]);
-				$this->setAnno($tassa[2]);
-				$this->setDescrizione($tassa[3]);
-				$this->setScadenza($tassa[4]);
-				$this->setImporto($tassa[5]);
-				$this->setStato($tassa[6]);
+				//$this->setAnno($tassa[2]);
+				$this->setDescrizione($tassa[2]);
+				$this->setScadenza($tassa[3]);
+				$this->setImporto($tassa[4]);
+				$this->setStato($tassa[5]);
 
 			}
 		}
@@ -72,7 +72,7 @@
 
 		// Getter - Setter per descrizione
 		public function setDescrizione($descrizione){
-			$this->descrizione = $descrizione;
+			$this->descrizione = trim(preg_replace('/[^A-Za-z0-9\-]/', ' ', $descrizione));
 		}
 		public function getDescrizione(){ return $this->descrizione; }
 
@@ -112,7 +112,7 @@
 			return array(
 					"idPagamento" 			=> $this->idPagamento 			? $this->idPagamento : "",
 					"numeroAvvisoPagamento" => $this->numeroAvvisoPagamento ? $this->numeroAvvisoPagamento : "", 
-					"anno" 					=> $this->anno 					? $this->anno : "", 
+					//"anno" 					=> $this->anno 					? $this->anno : "", 
 					"descrizione"			=> $this->descrizione 			? $this->descrizione : "",
 					"scadenza" 				=> $this->scadenza 				? $this->scadenza : "",
 					"importo" 				=> $this->importo 				? $this->importo : "",
