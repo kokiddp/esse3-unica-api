@@ -291,12 +291,20 @@ class ParseEsse3 extends Esse3 {
 
 			
 			} // end of foreach($cells as $cell )
+
+
+			// Tasse non pagate
+			if(count($tassa[$key]) == 9)
+				$tasse[$key] = new Tassa($tassa[$key]);
+
+			// Tasse pagate
 			if(count($tassa[$key]) == 7)
 				$tasse[$key] = new Tassa($tassa[$key]);
 			
 
 		} // end of foreach ($rows as $key => $row)
 		
+		//print_r($tassa[0]);
 		return $tasse; 
 	}
 

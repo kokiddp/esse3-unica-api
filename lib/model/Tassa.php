@@ -48,7 +48,16 @@
 				$this->setScadenza($tassa[3]);
 				$this->setImporto($tassa[4]);
 				$this->setStato($tassa[6]);
+			}
 
+			if(count($tassa) == 9){
+				$this->setIdPagamento($tassa[0]);
+				$this->setNumeroAvvisoPagamento($tassa[1]);
+				//$this->setAnno($tassa[2]);
+				$this->setDescrizione($tassa[2]);
+				$this->setScadenza($tassa[3]);
+				$this->setImporto($tassa[4]);
+				$this->setStato($tassa[6]);
 			}
 		}
 
