@@ -61,9 +61,11 @@
 	     */
 		public function __construct($corso){
 			if(count($corso) != 0){
-				
+				//if(count($corso) == 8)
+					//print_r($corso);
 				//
 				if(count($corso) == 7){
+				
 					$this->setAnnoCorso($corso[0]);
 					$this->setNomeCorso("$corso[1]");
 					$this->setNomeCorsoSmall("$corso[1]");
@@ -72,18 +74,31 @@
 					$this->setAnnoFrequenza($corso[4]);
 					$this->setVoto($corso[5], $corso[3]);
 					$this->setDataConvalida($corso[5], $corso[3]);
-					$this->setObbligatorio($corso[2]);
+					$this->setObbligatorio($corso[2]);					
 				}
 				if(count($corso) == 8 || count($corso) == 9){
-					$this->setAnnoCorso($corso[0]);
-					$this->setNomeCorso($corso[1]);
-					$this->setNomeCorsoSmall("$corso[1]");
-					$this->setCrediti($corso[3]);
-					$this->setStato($corso[4]);
-					$this->setAnnoFrequenza($corso[5]);
-					$this->setVoto($corso[6], $corso[4]);
-					$this->setDataConvalida($corso[6], $corso[4]);
-					$this->setObbligatorio($corso[2]);
+					if($corso[6] == "R/A"){
+						$this->setAnnoCorso($corso[0]);
+						$this->setNomeCorso("$corso[1]");
+						$this->setNomeCorsoSmall("$corso[1]");
+						$this->setCrediti($corso[2]);
+						$this->setStato($corso[3]);
+						$this->setAnnoFrequenza($corso[4]);
+						$this->setVoto($corso[5], $corso[3]);
+						$this->setDataConvalida($corso[5], $corso[3]);
+						$this->setObbligatorio("");
+					}
+					else{
+						$this->setAnnoCorso($corso[0]);
+						$this->setNomeCorso($corso[1]);
+						$this->setNomeCorsoSmall("$corso[1]");
+						$this->setCrediti($corso[3]);
+						$this->setStato($corso[4]);
+						$this->setAnnoFrequenza($corso[5]);
+						$this->setVoto($corso[6], $corso[4]);
+						$this->setDataConvalida($corso[6], $corso[4]);
+						$this->setObbligatorio($corso[2]);
+					}
 				}
 
 			}
